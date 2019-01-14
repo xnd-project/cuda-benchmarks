@@ -10,7 +10,7 @@ Unified memory has been a feature of game consoles for many years. It simplifies
 Starting with the Pascal architecture, Nvidia also offers [advanced unified memory support](https://devblogs.nvidia.com/unified-memory-cuda-beginners/).
 
 
-Game consoles can have tighter hardware control, but Nvidia also had the [Jetson product line](https://en.wikipedia.org/wiki/Nvidia_Jetson) with physically unified memory that has been [reported](https://devtalk.nvidia.com/default/topic/1029853/does-unified-memory-and-zero-copy-always-better-than-cudamemcpy-/) to have better performance than explicit memory management.
+Game consoles can have tighter hardware control, but Nvidia also has the [Jetson product line](https://en.wikipedia.org/wiki/Nvidia_Jetson) with physically unified memory that has been [reported](https://devtalk.nvidia.com/default/topic/1029853/does-unified-memory-and-zero-copy-always-better-than-cudamemcpy-/) to have better performance than explicit memory management.
 
 
 ## Unified memory reputation
