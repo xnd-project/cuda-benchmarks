@@ -68,7 +68,7 @@ host: free: 0.355253
 total: 2.469710
 ```
 
-With N=500000000, managed memory has no issues, but explicit memory does not run at all. DMA again performs very well.
+With N=500000000, managed memory has no issues, but explicit memory does not run at all. DMA again performs very well:
 
 
 ```
