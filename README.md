@@ -1,5 +1,5 @@
 
-### Cuda benchmarks for unified vs. explicit memory
+# Cuda benchmarks for unified vs. explicit memory
 
 
 ## Unified memory
@@ -32,7 +32,7 @@ This benchmark suite attempts to provide actual code so that people can check fo
 
 The examples were run on Linux with Cuda release 9.2, V9.2.148, using 16GB of host memory and a GeForce 1060 with 6GB of GPU memory.
 
-# simpleManaged vs. simpleMemcpy vs. simpleDMA
+### simpleManaged vs. simpleMemcpy vs. simpleDMA
 
 This benchmark tests initializing three arrays in host memory, running a kernel and accessing the result. Most of the time is spent in copying, the kernel runtime is negligible.
 
@@ -88,7 +88,7 @@ cudaErrorMemoryAllocation
 
 ```
 
-# cuBLAS: gemmManaged vs. gemmMemcpy
+### cuBLAS: gemmManaged vs. gemmMemcpy
 
 This benchmark calls the cublasSgemm() function.
 
@@ -133,7 +133,7 @@ total: 36.929403
 ```
 
 
-# cuBlas+Managed vs. cuBlasXt+HostMemory
+### cuBlas+Managed vs. cuBlasXt+HostMemory
 
 cuBlasXt handles out-of-core computations for memory that is allocated with cudaMallocHost(). This benchmark compares the cublasSgemm() function running on managed memory vs. the cublasXtSgemm() function running on host allocated memory.
 
