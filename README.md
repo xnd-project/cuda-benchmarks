@@ -128,7 +128,7 @@ total: 38.120901
 
 cuBlasXt handles out-of-core computations for memory that is allocated with cudaMallocHost(). This benchmark compares the cublasSgemm() function running on managed memory vs. the cublasXtSgemm() function running on host allocated memory.
 
-Note that cublasXtSgemm() is designed to run on host allocated memory and handles optimized tiled memory transfers. Also not that cuBlasXt has more functionality (multiple cards), so the slightly worse performance is not surprising.
+Note that cublasXtSgemm() is designed to run on host allocated memory and handles optimized tiled memory transfers. Also note that cuBlasXt has more functionality (multiple cards), so the slightly worse performance is not surprising.
 
 The point of this comparison, however, is that managed memory performs very well using the standard cuBlas function.
 
