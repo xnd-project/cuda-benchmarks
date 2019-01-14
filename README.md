@@ -71,7 +71,7 @@ host: access all arrays: 1.643403
 host: access all arrays a second time: 0.607834
 host: free: 0.380680
 total: 6.734027
-$ 
+
 $ ./simpleMemcpy 
 host: malloc: 1.970601
 host: init arrays: 0.675828
@@ -113,7 +113,7 @@ host: access all arrays: 0.000108
 host: access all arrays a second time: 0.000030
 host: free: 0.083837
 total: 4.546474
-$ 
+
 $ ./gemmMemcpy 
 host: cudaMallocHost+init: 0.943743
 cublasSgemm: 36.860626
