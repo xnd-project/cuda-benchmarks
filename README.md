@@ -19,7 +19,7 @@ There have been several reports, many of them from around 2014, that unified mem
 
 Recent reports appear to address only specialty scenarios like [8 NVlink GPUs](https://devtalk.nvidia.com/default/topic/1029706/cuda-programming-and-performance/partial-fail-of-peer-access-in-8-volta-gpu-instance-p3-16xlarge-on-aws-gt-huge-slowdown-/).
 
-The report also has no code link.
+That report also has no code link.
 
 
 
@@ -30,7 +30,7 @@ This benchmark suite attempts to provide actual code so that people can check fo
 
 ## Examples
 
-The examples were run on Linux with Cuda release 9.2, V9.2.148, using a GeForce 1060 with 6GB of memory.
+The examples were run on Linux with Cuda release 9.2, V9.2.148, using 16GB of host memory and a GeForce 1060 with 6GB of GPU memory.
 
 # simpleManaged vs. simpleMemcpy vs. simpleDMA
 
