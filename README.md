@@ -30,7 +30,7 @@ This benchmark suite attempts to provide actual code so that people can check fo
 
 ## Examples
 
-The examples are run on Linux with Cuda release 9.2, V9.2.148, using a GeForce 1060 with 6GB of memory.
+The examples were run on Linux with Cuda release 9.2, V9.2.148, using a GeForce 1060 with 6GB of memory.
 
 # simpleManaged vs. simpleMemcpy
 
