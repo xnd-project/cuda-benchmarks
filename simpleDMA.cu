@@ -28,14 +28,16 @@ doit(const uint64_t a[], const uint64_t b[], uint64_t c[], int64_t N)
 int
 main(int argc, char *argv[])
 {
-    size_t N = DEFAULT_N;
-    if (argc==2) N = (size_t)atoi(argv[1]);
-    printf("N=%zd\n", N);
-
+    size_t N = 10000000;
     clock_t start_program, end_program;
     clock_t start, end;
     uint64_t *a, *b, *c;
-    size_t count = N * sizeof(uint64_t);
+    size_t count;
+
+    if (argc == 2) {
+        N = checked_strtosize(argv[1]);
+    }
+    count = checked_mul(N, sizeof(uint64_t));
 
     start_program = clock();
 
@@ -58,7 +60,7 @@ main(int argc, char *argv[])
     doit(a, b, c, N);
     check(cudaDeviceSynchronize());
     end = clock();
-    log("device: MallocHost+compute", start, end);
+    log("device: DMA+compute+synchronize", start, end);
 
     start = clock();
     for (size_t i = 0; i < N; i++) {
@@ -83,9 +85,9 @@ main(int argc, char *argv[])
     log("host: access all arrays a second time", start, end);
 
     start = clock();
-    cudaFreeHost(a);
-    cudaFreeHost(b);
-    cudaFreeHost(c);
+    check(cudaFreeHost(a));
+    check(cudaFreeHost(b));
+    check(cudaFreeHost(c));
     end = clock();
     log("host: free", start, end);
 
