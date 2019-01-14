@@ -82,9 +82,9 @@ main(int argc, char *argv[])
     log("host: access all arrays a second time", start, end);
 
     start = clock();
-    cudaFree(a);
-    cudaFree(b);
-    cudaFree(c);
+    check(cudaFree(a));
+    check(cudaFree(b));
+    check(cudaFree(c));
     end = clock();
     log("host: free", start, end);
 

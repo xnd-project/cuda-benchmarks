@@ -67,9 +67,9 @@ main(int argc, char *argv[])
 
     check(cudaMemcpy(c, dc, count, cudaMemcpyDeviceToHost));
 
-    cudaFree(da);
-    cudaFree(db);
-    cudaFree(dc);
+    check(cudaFree(da));
+    check(cudaFree(db));
+    check(cudaFree(dc));
     end = clock();
     log("device: malloc+copy+compute", start, end);
 
@@ -96,9 +96,9 @@ main(int argc, char *argv[])
     log("host: access all arrays a second time", start, end);
 
     start = clock();
-    cudaFreeHost(a);
-    cudaFreeHost(b);
-    cudaFreeHost(c);
+    check(cudaFreeHost(a));
+    check(cudaFreeHost(b));
+    check(cudaFreeHost(c));
     end = clock();
     log("host: free", start, end);
 
