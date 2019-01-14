@@ -1,10 +1,8 @@
 #include <cstdio>
+#include <cstdlib>
 #include <cinttypes>
 #include <cuda_runtime.h>
 #include "common.hh"
-
-
-const size_t N = 500000000;
 
 
 static __global__ void
@@ -28,8 +26,12 @@ doit(const uint64_t a[], const uint64_t b[], uint64_t c[], int64_t N)
 }
 
 int
-main(void)
+main(int argc, char *argv[])
 {
+    size_t N = DEFAULT_N;
+    if (argc==2) N = (size_t)atoi(argv[1]);
+    printf("N=%zd\n", N);
+
     clock_t start_program, end_program;
     clock_t start, end;
     uint64_t *a, *b, *c;
@@ -43,7 +45,7 @@ main(void)
     check(cudaMallocHost(&b, count));
     check(cudaMallocHost(&c, count));
     end = clock();
-    log("host: malloc", start, end);
+    log("host: MallocHost", start, end);
 
     start = clock();
     for (size_t i = 0; i < N; i++) {
@@ -60,7 +62,6 @@ main(void)
 
     check(cudaMemcpy(da, a, count, cudaMemcpyHostToDevice));
     check(cudaMemcpy(db, b, count, cudaMemcpyHostToDevice));
-    check(cudaMemcpy(dc, c, count, cudaMemcpyHostToDevice));
 
     doit(da, db, dc, N);
 
@@ -95,9 +96,9 @@ main(void)
     log("host: access all arrays a second time", start, end);
 
     start = clock();
-    cudaFree(a);
-    cudaFree(b);
-    cudaFree(c);
+    cudaFreeHost(a);
+    cudaFreeHost(b);
+    cudaFreeHost(c);
     end = clock();
     log("host: free", start, end);
 
