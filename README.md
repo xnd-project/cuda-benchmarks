@@ -17,7 +17,7 @@ Game consoles can have tighter hardware control, but Nvidia also has the [Jetson
 
 There have been several reports, many of them from around 2014, that unified memory has a lower performance in many scenarios. The reports usually do not come with links to actual code.
 
-Recent reports appear to address only specialty scenarios like [8 NVlink GPUS](https://devtalk.nvidia.com/default/topic/1029706/cuda-programming-and-performance/partial-fail-of-peer-access-in-8-volta-gpu-instance-p3-16xlarge-on-aws-gt-huge-slowdown-/).
+Recent reports appear to address only specialty scenarios like [8 NVlink GPUs](https://devtalk.nvidia.com/default/topic/1029706/cuda-programming-and-performance/partial-fail-of-peer-access-in-8-volta-gpu-instance-p3-16xlarge-on-aws-gt-huge-slowdown-/).
 
 The report also has no code link.
 
