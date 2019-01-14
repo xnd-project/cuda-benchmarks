@@ -5,7 +5,8 @@
 #include "common.hh"
 
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
     size_t N = 16000;
     clock_t start, end; 
