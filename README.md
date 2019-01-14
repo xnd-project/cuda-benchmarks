@@ -40,41 +40,41 @@ With N=200000000, explicit memory performs slightly better:
 
 
 ```
-$ ./simpleManaged 
-host: malloc: 0.210889
-host: init arrays: 0.655248
-device: uvm+compute+synchronize: 0.954883
-host: access all arrays: 0.928161
-host: access all arrays a second time: 0.244277
-host: free: 0.175481
-total: 3.169012
+$ ./simpleManaged 200000000
+host: MallocManaged: 0.207567
+host: init arrays: 0.656531
+device: uvm+compute+synchronize: 0.935152
+host: access all arrays: 0.927765
+host: access all arrays a second time: 0.244892
+host: free: 0.176825
+total: 3.148806
 
-$ ./simpleMemcpy 
-host: malloc: 0.926996
-host: init arrays: 0.269095
-device: malloc+copy+compute: 1.108133
-host: access all arrays: 0.238951
-host: access all arrays a second time: 0.239062
-host: free: 0.000005
-total: 2.782294
+$ ./simpleMemcpy 200000000
+host: MallocHost: 0.926877
+host: init arrays: 0.269733
+device: malloc+copy+compute: 0.881206
+host: access all arrays: 0.241988
+host: access all arrays a second time: 0.241711
+host: free: 0.355382
+total: 2.916964
 ```
 
 With N=500000000, managed memory has no issues, but explicit memory does not run at all:
 
 
 ```
-$ ./simpleManaged 
-host: malloc: 0.208101
-host: init arrays: 1.631877
-device: uvm+compute+synchronize: 2.262058
-host: access all arrays: 1.643403
-host: access all arrays a second time: 0.607834
-host: free: 0.380680
-total: 6.734027
+$ ./simpleManaged 500000000
+host: MallocManaged: 0.209091
+host: init arrays: 1.640432
+device: uvm+compute+synchronize: 2.262001
+host: access all arrays: 1.647232
+host: access all arrays a second time: 0.607801
+host: free: 0.382323
+total: 6.748957
 
-$ ./simpleMemcpy 
-host: malloc: 1.970601
-host: init arrays: 0.675828
+$ ./simpleMemcpy 500000000
+host: MallocHost: 1.991162
+host: init arrays: 0.685019
 cudaErrorMemoryAllocation
 
 ```
@@ -86,41 +86,41 @@ This benchmark calls the cublasSgemm() function.
 With N=8000, managed memory is considerably faster:
 
 ```
-$ ./gemmManaged
-host: cudaMallocManaged+init: 0.195686
-cublasSgemm: 1.421310
-host: access all arrays: 0.000100
-host: access all arrays a second time: 0.000012
-host: free: 0.029193
-total: 1.965400
-
-$ ./gemmMemcpy 
-host: cudaMallocHost+init: 0.238533
-cublasSgemm: 3.342471
-host: access all arrays: 0.000031
+$ ./gemmManaged 8000
+host: cudaMallocManaged+init: 0.191981
+cublasSgemm: 1.430046
+host: access all arrays: 0.000080
 host: access all arrays a second time: 0.000008
-host: free: 0.000002
-total: 3.899770
+host: free: 0.030062
+total: 1.967801
+
+$ ./gemmMemcpy 8000
+host: cudaMallocHost+init: 0.236840
+cublasSgemm: 3.316726
+host: access all arrays: 0.000030
+host: access all arrays a second time: 0.000008
+host: free: 0.061765
+total: 3.928581
 ```
 
 With N=16000, managed memory is not only considerably faster, but explicit memory performance is catastrophic:
 
 ```
-$ ./gemmManaged
-host: cudaMallocManaged+init: 0.761136
-cublasSgemm: 3.388252
-host: access all arrays: 0.000108
-host: access all arrays a second time: 0.000030
-host: free: 0.083837
-total: 4.546474
+$ ./gemmManaged 16000
+host: cudaMallocManaged+init: 0.761249
+cublasSgemm: 3.317761
+host: access all arrays: 0.000105
+host: access all arrays a second time: 0.000045
+host: free: 0.084146
+total: 4.477609
 
-$ ./gemmMemcpy 
-host: cudaMallocHost+init: 0.943743
-cublasSgemm: 36.860626
-host: access all arrays: 0.000039
-host: access all arrays a second time: 0.000016
-host: free: 0.000002
-total: 38.120901
+$ ./gemmMemcpy 16000
+host: cudaMallocHost+init: 0.940572
+cublasSgemm: 35.439908
+host: access all arrays: 0.000038
+host: access all arrays a second time: 0.000017
+host: free: 0.232385
+total: 36.929403
 ```
 
 
@@ -133,11 +133,11 @@ Note that cublasXtSgemm() is designed to run on host allocated memory and handle
 The point of this comparison, however, is that managed memory performs very well using the standard cuBlas function.
 
 ```
-$ ./gemmManagedOutOfCore 
-host: cudaMallocManaged+init: 3.041447
-cublasSgemm: 20.852501
+$ ./gemmManagedOutOfCore 32000
+host: cudaMallocManaged+init: 3.059273
+cublasSgemm: 20.510228
 
-$ ./gemmXtOutOfCore 
-host: cudaMallocHost+init: 3.749518
-cublasXtSgemm: 25.600282
+$ ./gemmXtOutOfCore 32000
+host: cudaMallocHost+init: 3.766991
+cublasXtSgemm: 25.617316
 ```
