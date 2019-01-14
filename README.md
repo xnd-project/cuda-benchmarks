@@ -105,7 +105,7 @@ With N=8000, managed memory is considerably faster:
 
 ```
 $ ./gemmManaged 8000
-host: cudaMallocManaged+init: 0.191981
+host: MallocManaged+init: 0.191981
 cublasSgemm: 1.430046
 host: access all arrays: 0.000080
 host: access all arrays a second time: 0.000008
@@ -113,7 +113,7 @@ host: free: 0.030062
 total: 1.967801
 
 $ ./gemmMemcpy 8000
-host: cudaMallocHost+init: 0.236840
+host: MallocHost+init: 0.236840
 cublasSgemm: 3.316726
 host: access all arrays: 0.000030
 host: access all arrays a second time: 0.000008
@@ -125,7 +125,7 @@ With N=16000, managed memory is not only considerably faster, but explicit memor
 
 ```
 $ ./gemmManaged 16000
-host: cudaMallocManaged+init: 0.761249
+host: MallocManaged+init: 0.761249
 cublasSgemm: 3.317761
 host: access all arrays: 0.000105
 host: access all arrays a second time: 0.000045
@@ -133,7 +133,7 @@ host: free: 0.084146
 total: 4.477609
 
 $ ./gemmMemcpy 16000
-host: cudaMallocHost+init: 0.940572
+host: MallocHost+init: 0.940572
 cublasSgemm: 35.439908
 host: access all arrays: 0.000038
 host: access all arrays a second time: 0.000017
@@ -152,10 +152,10 @@ The point of this comparison, however, is that managed memory performs very well
 
 ```
 $ ./gemmManagedOutOfCore 32000
-host: cudaMallocManaged+init: 3.059273
+host: MallocManaged+init: 3.059273
 cublasSgemm: 20.510228
 
 $ ./gemmXtOutOfCore 32000
-host: cudaMallocHost+init: 3.766991
+host: MallocHost+init: 3.766991
 cublasXtSgemm: 25.617316
 ```

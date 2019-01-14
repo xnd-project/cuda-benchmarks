@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
         b[i] = i / 101.0;
     }
     end = clock();
-    log("host: cudaMallocHost+init", start, end);
+    log("host: MallocHost+init", start, end);
 
     start = clock();
     check(cublasXtSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
