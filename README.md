@@ -68,7 +68,7 @@ host: free: 0.355253
 total: 2.469710
 ```
 
-With N=500000000, managed memory has no issues, but explicit memory does not run at all:
+With N=500000000, managed memory has no issues, but explicit memory does not run at all. DMA again performs very well.
 
 
 ```
@@ -85,6 +85,15 @@ $ ./simpleMemcpy 500000000
 host: MallocHost: 1.991162
 host: init arrays: 0.685019
 cudaErrorMemoryAllocation
+
+$ ./simpleDMA 500000000
+host: MallocHost: 1.965220
+host: init arrays: 0.682884
+device: DMA+compute+synchronize: 0.801201
+host: access all arrays: 0.606232
+host: access all arrays a second time: 0.606821
+host: free: 0.877267
+total: 5.539693
 
 ```
 
