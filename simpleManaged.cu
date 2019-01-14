@@ -4,7 +4,7 @@
 #include "common.hh"
 
 
-const size_t N = 500000000;
+const size_t N = 200000000;
 
 
 static __global__ void

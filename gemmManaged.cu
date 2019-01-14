@@ -5,7 +5,7 @@
 #include "common.hh"
 
 
-const size_t N = 16000;
+const size_t N = 8000;
 
 
 int main()
