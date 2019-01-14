@@ -136,7 +136,7 @@ The point of this comparison, however, is that managed memory performs very well
 $ ./gemmManagedOutOfCore 
 host: cudaMallocManaged+init: 3.041447
 cublasSgemm: 20.852501
-$ 
+
 $ ./gemmXtOutOfCore 
 host: cudaMallocHost+init: 3.749518
 cublasXtSgemm: 25.600282
