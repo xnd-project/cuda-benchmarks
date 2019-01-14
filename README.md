@@ -32,11 +32,11 @@ This benchmark suite attempts to provide actual code so that people can check fo
 
 The examples were run on Linux with Cuda release 9.2, V9.2.148, using a GeForce 1060 with 6GB of memory.
 
-# simpleManaged vs. simpleMemcpy
+# simpleManaged vs. simpleMemcpy vs. simpleDMA
 
 This benchmark tests initializing three arrays in host memory, running a kernel and accessing the result. Most of the time is spent in copying, the kernel runtime is negligible.
 
-With N=200000000, explicit memory performs slightly better:
+With N=200000000, explicit memory performs slightly better, but DMA is faster than both:
 
 
 ```
@@ -57,6 +57,15 @@ host: access all arrays: 0.241988
 host: access all arrays a second time: 0.241711
 host: free: 0.355382
 total: 2.916964
+
+$ ./simpleDMA 200000000
+host: MallocHost: 0.915921
+host: init arrays: 0.269055
+device: DMA+compute+synchronize: 0.455074
+host: access all arrays: 0.236830
+host: access all arrays a second time: 0.237515
+host: free: 0.355253
+total: 2.469710
 ```
 
 With N=500000000, managed memory has no issues, but explicit memory does not run at all:
