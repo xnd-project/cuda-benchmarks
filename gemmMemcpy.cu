@@ -5,11 +5,12 @@
 #include "common.hh"
 
 
-const size_t N = 8000;
-
-
-int main()
+int main(int argc, char *argv[])
 {
+    size_t N = DEFAULT_N;
+    if (argc==2) N = (size_t)atoi(argv[1]);
+    printf("N=%zd\n", N);
+
     clock_t start_program, end_program;
     clock_t start, end;
     cublasHandle_t handle;
@@ -42,7 +43,6 @@ int main()
 
     check(cudaMemcpy(da, a, count, cudaMemcpyHostToDevice));
     check(cudaMemcpy(db, b, count, cudaMemcpyHostToDevice));
-    check(cudaMemcpy(dc, c, count, cudaMemcpyHostToDevice));
 
     check(cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
                       N, N, N,
@@ -82,9 +82,9 @@ int main()
     log("host: access all arrays a second time", start, end);
 
     start = clock();
-    cudaFree(a);
-    cudaFree(b);
-    cudaFree(c);
+    cudaFreeHost(a);
+    cudaFreeHost(b);
+    cudaFreeHost(c);
     end = clock();
     log("host: free", start, end);
 

@@ -5,11 +5,12 @@
 #include "common.hh"
 
 
-const size_t N = 8000;
-
-
-int main()
+int main(int argc, char *argv[])
 {
+    size_t N = DEFAULT_N;
+    if (argc==2) N = (size_t)atoi(argv[1]);
+    printf("N=%zd\n", N);
+
     clock_t start_program, end_program;
     clock_t start, end;
     cublasHandle_t handle;
