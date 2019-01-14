@@ -7,10 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-    size_t N = DEFAULT_N;
-    if (argc==2) N = (size_t)atoi(argv[1]);
-    printf("N=%zd\n", N);
-
+    size_t N = 1000;
     clock_t start_program, end_program;
     clock_t start, end;
     cublasHandle_t handle;
@@ -18,7 +15,13 @@ int main(int argc, char *argv[])
     float *da, *db, *dc;
     const float alpha = 1;
     const float beta = 0;
-    const size_t count = N*N * sizeof(float);
+    size_t count, nn;
+
+    if (argc == 2) {
+        N = checked_strtosize(argv[1]);
+    }
+    nn = checked_mul(N, N);
+    count = checked_mul(nn, sizeof(float));
 
     start_program = clock();
 

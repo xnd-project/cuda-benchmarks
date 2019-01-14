@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cstdlib>
+#include <cstdint>
 #include <ctime>
+#include <cerrno>
 #include <cuda_runtime.h>
 #include <cublasXt.h>
 #include "common.hh"
@@ -46,6 +48,38 @@ check(cublasStatus_t status)
         fprintf(stderr, "%s\n", cublasStatusAsString(status));
         exit(1);
     }
+}
+
+size_t
+checked_strtosize(const char *v)
+{
+    char *endptr;
+    long long lld;
+
+    errno = 0;
+    lld = strtoll(v, &endptr, 10);
+    if (*v == '\0' || *endptr != '\0') {
+        fprintf(stderr, "N: invalid integer: '%s'\n", v);
+        exit(1);
+    }
+
+    if (errno == ERANGE || lld < 1 || (uint64_t)lld > SIZE_MAX) {
+        fprintf(stderr, "N: out of range: '%s'\n", v);
+        exit(1);
+    }
+
+    return (size_t)lld;
+}
+
+size_t
+checked_mul(size_t a, size_t b)
+{
+    if (a > SIZE_MAX / b) {
+        fprintf(stderr, "overflow error\n");
+        exit(1);
+    }
+
+    return a * b;
 }
 
 void

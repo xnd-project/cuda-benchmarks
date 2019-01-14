@@ -28,15 +28,17 @@ doit(const uint64_t a[], const uint64_t b[], uint64_t c[], int64_t N)
 int
 main(int argc, char *argv[])
 {
-    size_t N = DEFAULT_N;
-    if (argc==2) N = (size_t)atoi(argv[1]);
-    printf("N=%zd\n", N);
-
+    size_t N = 10000000;
     clock_t start_program, end_program;
     clock_t start, end;
     uint64_t *a, *b, *c;
     uint64_t *da, *db, *dc;
-    size_t count = N * sizeof(uint64_t);
+    size_t count;
+
+    if (argc == 2) {
+        N = checked_strtosize(argv[1]);
+    }
+    count = checked_mul(N, sizeof(uint64_t));
 
     start_program = clock();
 
