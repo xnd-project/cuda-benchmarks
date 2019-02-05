@@ -3,7 +3,7 @@
 NVCC = nvcc --compiler-options="-Wall -Wextra -O3" -std=c++11 -arch=compute_61 -code=sm_61 -lcublas
 
 
-default: common.o simpleMemcpy simpleManaged simpleDMA gemmMemcpy gemmManaged gemmXtOutOfCore gemmManagedOutOfCore
+default: common.o simpleMemcpy simpleManaged simpleDMA stridedManaged gemmMemcpy gemmManaged gemmXtOutOfCore gemmManagedOutOfCore
 
 
 simpleMemcpy: Makefile simpleMemcpy.cu common.o
@@ -14,6 +14,9 @@ simpleManaged: Makefile simpleManaged.cu common.o
 
 simpleDMA: Makefile simpleDMA.cu common.o
 	$(NVCC) -o simpleDMA simpleDMA.cu common.o
+
+stridedManaged: Makefile stridedManaged.cu common.o
+	$(NVCC) -o stridedManaged stridedManaged.cu common.o
 
 gemmMemcpy: Makefile gemmMemcpy.cu common.o
 	$(NVCC) -o gemmMemcpy gemmMemcpy.cu common.o
@@ -32,4 +35,4 @@ common.o: Makefile common.cc common.hh
 
 
 clean:
-	rm -f common.o simpleMemcpy simpleManaged simpleDMA gemmMemcpy gemmManaged gemmXtOutOfCore gemmManagedOutOfCore
+	rm -f common.o simpleMemcpy simpleManaged simpleDMA stridedManaged gemmMemcpy gemmManaged gemmXtOutOfCore gemmManagedOutOfCore
