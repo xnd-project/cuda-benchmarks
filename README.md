@@ -41,31 +41,31 @@ With N=200000000, explicit memory performs slightly better, but DMA is faster th
 
 ```
 $ ./simpleManaged 200000000
-host: MallocManaged: 0.207567
-host: init arrays: 0.656531
-device: uvm+compute+synchronize: 0.935152
-host: access all arrays: 0.927765
-host: access all arrays a second time: 0.244892
-host: free: 0.176825
-total: 3.148806
+host: MallocManaged: 0.000040
+host: init arrays: 0.662895
+device: uvm+compute+synchronize: 0.892010
+host: access all arrays: 0.929058
+host: access all arrays a second time: 0.245681
+host: free: 0.176788
+total: 2.906544
 
 $ ./simpleMemcpy 200000000
-host: MallocHost: 0.926877
-host: init arrays: 0.269733
-device: malloc+copy+compute: 0.881206
-host: access all arrays: 0.241988
-host: access all arrays a second time: 0.241711
-host: free: 0.355382
-total: 2.916964
+host: MallocHost: 0.706024
+host: init arrays: 0.259399
+device: malloc+copy+compute: 0.420570
+host: access all arrays: 0.239900
+host: access all arrays a second time: 0.239795
+host: free: 0.350564
+total: 2.216320
 
 $ ./simpleDMA 200000000
-host: MallocHost: 0.915921
-host: init arrays: 0.269055
-device: DMA+compute+synchronize: 0.455074
-host: access all arrays: 0.236830
-host: access all arrays a second time: 0.237515
-host: free: 0.355253
-total: 2.469710
+host: MallocHost: 0.700510
+host: init arrays: 0.260276
+device: DMA+compute+synchronize: 0.266353
+host: access all arrays: 0.241061
+host: access all arrays a second time: 0.240792
+host: free: 0.349305
+total: 2.058358
 ```
 
 With N=500000000, managed memory has no issues, but explicit memory does not run at all. DMA again performs very well:
@@ -73,28 +73,27 @@ With N=500000000, managed memory has no issues, but explicit memory does not run
 
 ```
 $ ./simpleManaged 500000000
-host: MallocManaged: 0.209091
-host: init arrays: 1.640432
-device: uvm+compute+synchronize: 2.262001
-host: access all arrays: 1.647232
-host: access all arrays a second time: 0.607801
-host: free: 0.382323
-total: 6.748957
+host: MallocManaged: 0.000043
+host: init arrays: 1.632873
+device: uvm+compute+synchronize: 2.235518
+host: access all arrays: 1.640106
+host: access all arrays a second time: 0.607754
+host: free: 0.382087
+total: 6.498456
 
 $ ./simpleMemcpy 500000000
-host: MallocHost: 1.991162
-host: init arrays: 0.685019
+host: MallocHost: 1.751784
+host: init arrays: 0.674096
 cudaErrorMemoryAllocation
 
 $ ./simpleDMA 500000000
-host: MallocHost: 1.965220
-host: init arrays: 0.682884
-device: DMA+compute+synchronize: 0.801201
-host: access all arrays: 0.606232
-host: access all arrays a second time: 0.606821
-host: free: 0.877267
-total: 5.539693
-
+host: MallocHost: 1.750448
+host: init arrays: 0.673640
+device: DMA+compute+synchronize: 0.665088
+host: access all arrays: 0.607256
+host: access all arrays a second time: 0.607619
+host: free: 0.882589
+total: 5.186704
 ```
 
 ### cuBLAS: gemmManaged vs. gemmMemcpy

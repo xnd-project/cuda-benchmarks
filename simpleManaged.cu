@@ -38,6 +38,11 @@ main(int argc, char *argv[])
     }
     count = checked_mul(N, sizeof(uint64_t));
 
+    /* Initialize context */
+    check(cudaMallocManaged(&a, 128));
+    check(cudaDeviceSynchronize());
+    check(cudaFree(a));
+
     start_program = clock();
 
     start = clock();
