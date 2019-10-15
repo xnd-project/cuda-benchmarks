@@ -3,7 +3,7 @@
 NVCC = nvcc --compiler-options="-Wall -Wextra -O3" -std=c++11 -arch=compute_61 -code=sm_61 -lcublas
 
 
-default: common.o simpleMemcpy simpleManaged simpleDMA stridedManaged gemmMemcpy gemmManaged gemmXtOutOfCore gemmManagedOutOfCore
+default: common.o simpleMemcpy simpleManaged simpleManagedPrefetch simpleDMA stridedManaged gemmMemcpy gemmManaged gemmManagedPrefetch gemmXtOutOfCore gemmManagedOutOfCore
 
 
 simpleMemcpy: Makefile simpleMemcpy.cu common.o
@@ -11,6 +11,9 @@ simpleMemcpy: Makefile simpleMemcpy.cu common.o
 
 simpleManaged: Makefile simpleManaged.cu common.o
 	$(NVCC) -o simpleManaged simpleManaged.cu common.o
+
+simpleManagedPrefetch: Makefile simpleManagedPrefetch.cu common.o
+	$(NVCC) -o simpleManagedPrefetch simpleManagedPrefetch.cu common.o
 
 simpleDMA: Makefile simpleDMA.cu common.o
 	$(NVCC) -o simpleDMA simpleDMA.cu common.o
@@ -24,6 +27,9 @@ gemmMemcpy: Makefile gemmMemcpy.cu common.o
 gemmManaged: Makefile gemmManaged.cu common.o
 	$(NVCC) -o gemmManaged gemmManaged.cu common.o
 
+gemmManagedPrefetch: Makefile gemmManagedPrefetch.cu common.o
+	$(NVCC) -o gemmManagedPrefetch gemmManagedPrefetch.cu common.o
+
 gemmXtOutOfCore: Makefile gemmXtOutOfCore.cu common.o
 	$(NVCC) -o gemmXtOutOfCore gemmXtOutOfCore.cu common.o
 
@@ -35,4 +41,4 @@ common.o: Makefile common.cc common.hh
 
 
 clean:
-	rm -f common.o simpleMemcpy simpleManaged simpleDMA stridedManaged gemmMemcpy gemmManaged gemmXtOutOfCore gemmManagedOutOfCore
+	rm -f common.o simpleMemcpy simpleManaged simpleManagedPrefetch simpleDMA stridedManaged gemmMemcpy gemmManaged gemmManagedPrefetch gemmXtOutOfCore gemmManagedOutOfCore
