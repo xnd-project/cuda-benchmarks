@@ -1,0 +1,92 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <cublasXt.h>
+#include <cuda_runtime.h>
+#include "common.hh"
+
+
+int
+main(int argc, char *argv[])
+{
+    size_t N = 1000;
+    clock_t start_program, end_program;
+    clock_t start, end;
+    cublasHandle_t handle;
+    float *a, *b, *c;
+    const float alpha = 1;
+    const float beta = 0;
+    size_t count, nn;
+
+    if (argc == 2) {
+        N = checked_strtosize(argv[1]);
+    }
+    nn = checked_mul(N, N);
+    count = checked_mul(nn, sizeof(float));
+
+    start_program = clock();
+
+    check(cublasCreate(&handle));
+
+    start = clock();
+    check(cudaMallocManaged(&a, count, cudaMemAttachHost));
+    check(cudaMallocManaged(&b, count, cudaMemAttachHost));
+    check(cudaMallocManaged(&c, count));
+
+    for (size_t i = 0; i < N*N; i++) {
+        a[i] = i / 37.0;
+        b[i] = i / 101.0;
+    }
+    end = clock();
+    log("host: MallocManaged+init", start, end);
+
+    start = clock();
+    check(cudaStreamAttachMemAsync(NULL, a, 0, cudaMemAttachGlobal));
+    check(cudaStreamAttachMemAsync(NULL, b, 0, cudaMemAttachGlobal));
+    check(cublasSgemm(handle, CUBLAS_OP_N, CUBLAS_OP_N,
+                      N, N, N,
+                      &alpha,
+                      a, N,
+                      b, N,
+                      &beta,
+                      c, N));
+    check(cudaStreamAttachMemAsync(NULL, a, 0, cudaMemAttachHost));
+    check(cudaStreamAttachMemAsync(NULL, b, 0, cudaMemAttachHost));
+    check(cudaStreamAttachMemAsync(NULL, c, 0, cudaMemAttachHost));
+    check(cudaStreamSynchronize(NULL));
+    end = clock();
+    log("cublasSgemm", start, end);
+
+    start = clock();
+    for (size_t i = 0; i < N; i++) {
+        if (a[i] < 0 || b[i] < 0 || c[i] < 0) {
+            fprintf(stderr, "unexpected result a: %f  b: %f  c: %f\n",
+                    a[i], b[i], c[i]);
+            exit(1);
+        }
+    }
+    end = clock();
+    log("host: access all arrays", start, end);
+
+    start = clock();
+    for (size_t i = 0; i < N; i++) {
+        if (a[i] < 0 || b[i] < 0 || c[i] < 0) {
+            fprintf(stderr, "unexpected result a: %f  b: %f  c: %f\n",
+                    a[i], b[i], c[i]);
+            exit(1);
+        }
+    }
+    end = clock();
+    log("host: access all arrays a second time", start, end);
+
+    start = clock();
+    check(cudaFree(a));
+    check(cudaFree(b));
+    check(cudaFree(c));
+    end = clock();
+    log("host: free", start, end);
+
+    end_program = clock();
+    log("total", start_program, end_program);
+
+    return 0;
+}
